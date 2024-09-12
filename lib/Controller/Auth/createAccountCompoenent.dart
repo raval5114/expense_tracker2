@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:expense_tracker2/Modal/Provider/UserProvider.dart';
+import 'package:expense_tracker2/Provider/UserProvider.dart';
 import 'package:expense_tracker2/View/Auth/CreateAccount/createPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

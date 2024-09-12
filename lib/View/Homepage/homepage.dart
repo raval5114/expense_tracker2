@@ -2,8 +2,8 @@ import 'package:expense_tracker2/Controller/Features/features.dart';
 import 'package:expense_tracker2/Controller/Homepage/actionCard.dart';
 import 'package:expense_tracker2/Controller/Homepage/appBar.dart';
 import 'package:expense_tracker2/Controller/Homepage/drawerComponent.dart';
-import 'package:expense_tracker2/Controller/transactionHistory.dart';
-import 'package:expense_tracker2/Modal/Provider/sessionProvider.dart';
+import 'package:expense_tracker2/Controller/Src/transactionHistory.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

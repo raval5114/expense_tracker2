@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:expense_tracker2/Controller/Auth/addBankDetails.dart';
-import 'package:expense_tracker2/Controller/appLogo.dart';
-import 'package:expense_tracker2/Modal/Provider/UserProvider.dart';
+import 'package:expense_tracker2/Controller/Src/appLogo.dart';
+import 'package:expense_tracker2/Provider/UserProvider.dart';
 import 'package:expense_tracker2/View/Auth/SignUp/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

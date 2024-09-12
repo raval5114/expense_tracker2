@@ -1,5 +1,5 @@
 import 'package:expense_tracker2/Controller/Auth/createAccountCompoenent.dart';
-import 'package:expense_tracker2/Controller/appLogo.dart';
+import 'package:expense_tracker2/Controller/Src/appLogo.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccount extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'dart:async' show Timer;
 
-import 'package:expense_tracker2/Modal/Provider/accountProvider.dart';
+import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:expense_tracker2/Modal/User.dart';
 import 'package:expense_tracker2/Modal/auth.dart';
-import 'package:expense_tracker2/Modal/Provider/sessionProvider.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:expense_tracker2/Modal/bank.dart';
 import 'package:expense_tracker2/View/Auth/CreateAccount/namesAndDob.dart';
 import 'package:expense_tracker2/View/Homepage/homepage.dart';

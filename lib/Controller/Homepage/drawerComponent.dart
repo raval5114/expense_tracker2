@@ -1,4 +1,4 @@
-import 'package:expense_tracker2/Modal/Provider/sessionProvider.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:expense_tracker2/View/Auth/SignUp/loginPage.dart';
 import 'package:expense_tracker2/View/Drawer/accountPage.dart';
 import 'package:flutter/material.dart';

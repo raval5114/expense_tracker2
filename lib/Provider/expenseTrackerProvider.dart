@@ -20,6 +20,7 @@ class ExpenseTracker extends ChangeNotifier {
     notifyListeners();
   }
 
+  void LoadTransactionList(Map<String, dynamic> transList) {}
   void addIncome(
       String amount, String title, String category, String description) {
     currentBalc = currentBalc + int.parse(amount);

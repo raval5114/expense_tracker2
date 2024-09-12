@@ -1,4 +1,4 @@
-import 'package:expense_tracker2/Modal/Provider/accountProvider.dart';
+import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

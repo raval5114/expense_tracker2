@@ -1,5 +1,5 @@
-import 'package:expense_tracker2/Controller/transactionComponent.dart';
-import 'package:expense_tracker2/Modal/Provider/expenseTrackerProvider.dart';
+import 'package:expense_tracker2/Controller/Src/transactionComponent.dart';
+import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,8 +13,8 @@ class TransactionHistory extends ConsumerStatefulWidget {
 class TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
-    final ProviderList = ref.watch(expenseTrackerProvider).transactionList;
-    final transactionList = ProviderList.reversed.toList();
+    final providerList = ref.watch(expenseTrackerProvider).transactionList;
+    final transactionList = providerList.reversed.toList();
     //  int TransactionIndex = transactionList.length - 1;
     return Container(
       // height: 850,
@@ -28,7 +28,7 @@ class TransactionHistoryState extends ConsumerState<TransactionHistory> {
             child: const Row(
               children: [
                 Text(
-                  "Transaction history",
+                  "Recent Transaction",
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.blueAccent,

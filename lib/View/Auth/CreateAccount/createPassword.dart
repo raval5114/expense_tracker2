@@ -1,5 +1,5 @@
 import 'package:expense_tracker2/Controller/Auth/createPasswordComponent.dart';
-import 'package:expense_tracker2/Controller/appLogo.dart';
+import 'package:expense_tracker2/Controller/Src/appLogo.dart';
 import 'package:flutter/material.dart';
 
 class CreatepasswordPage extends StatefulWidget {

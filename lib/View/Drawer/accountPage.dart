@@ -1,4 +1,4 @@
-import 'package:expense_tracker2/Modal/Provider/sessionProvider.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

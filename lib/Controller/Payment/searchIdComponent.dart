@@ -1,5 +1,5 @@
 import 'package:expense_tracker2/Modal/ElectricityBill.dart';
-import 'package:expense_tracker2/Modal/Provider/billProvider.dart';
+import 'package:expense_tracker2/Provider/billProvider.dart';
 import 'package:expense_tracker2/Modal/billsApi.dart';
 import 'package:expense_tracker2/Modal/const.dart';
 import 'package:flutter/material.dart';

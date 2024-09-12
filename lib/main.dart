@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
-      home: const SearchId(),
+      home: const SplashScreen(),
     );
   }
 }
