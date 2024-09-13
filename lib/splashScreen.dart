@@ -1,9 +1,8 @@
 import 'package:expense_tracker2/Controller/Src/appLogo.dart';
-import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:expense_tracker2/Modal/User.dart';
 import 'package:expense_tracker2/Modal/auth.dart';
+import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
 import 'package:expense_tracker2/Provider/sessionProvider.dart';
-import 'package:expense_tracker2/Modal/bank.dart';
 import 'package:expense_tracker2/View/Auth/SignUp/loginPage.dart';
 import 'package:expense_tracker2/View/Homepage/homepage.dart';
 import 'package:flutter/material.dart';
@@ -33,39 +32,38 @@ class SplashScreen extends ConsumerWidget {
       final Map<String, dynamic>? user =
           await authService.loginUser(email, password);
       if (user != null) {
-        // Proceed with creating the session and navigating to the home page
-        ref.watch(sessionProvider).createSession(User(
+        // Load the transactions and create session
+        ref
+            .watch(expenseTrackerProvider)
+            .loadData(email); // Changed to ref.read
+        ref.read(sessionProvider).createSession(User(
               firstName: user['firstName'],
               lastName: user['lastname'],
               email: user['email'],
               dob: user['dob'],
               password: user['password'],
             ));
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyHomePage(),
-          ),
-        );
-        debugPrint('UserID:${user['userId']}');
+        _navigateToHome(context);
       } else {
-        // If loginUser returns null (e.g., wrong credentials), navigate to login
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginPage(),
-          ),
-        );
+        _navigateToLogin(context);
       }
     } else {
-      // If email or password is not found in SharedPreferences, navigate to login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        ),
-      );
+      _navigateToLogin(context);
     }
+  }
+
+  void _navigateToHome(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MyHomePage()),
+    );
+  }
+
+  void _navigateToLogin(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
   }
 
   @override

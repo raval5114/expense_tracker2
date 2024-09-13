@@ -173,6 +173,26 @@ class AuthService {
     }
   }
 
+  Future<Map<String, dynamic>?> findAndLoadTransaction(String email) async {
+    try {
+      final collection = await getCollection('Transactions');
+      final transaction = await collection.findOne(where.eq('email', email));
+
+      if (transaction != null) {
+        return {
+          'email': transaction['email'],
+          'currentBalc': transaction['currentBalc'],
+          'transactionList': transaction['transactionList'],
+        };
+      }
+    } catch (e) {
+      debugPrint('Error fetching transaction: $e');
+    }
+
+    // Return null if no transaction is found or if an error occurs
+    return null;
+  }
+
   Future<void> insertMultipleRecords(List<Map<String, dynamic>> records) async {
     try {
       final collection = await getCollection(ELECTRICITY_BILL_COLLECTION);

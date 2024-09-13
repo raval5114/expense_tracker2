@@ -15,9 +15,8 @@ class TransactionHistoryState extends ConsumerState<TransactionHistory> {
   Widget build(BuildContext context) {
     final providerList = ref.watch(expenseTrackerProvider).transactionList;
     final transactionList = providerList.reversed.toList();
-    //  int TransactionIndex = transactionList.length - 1;
+
     return Container(
-      // height: 850,
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +27,7 @@ class TransactionHistoryState extends ConsumerState<TransactionHistory> {
             child: const Row(
               children: [
                 Text(
-                  "Recent Transaction",
+                  "Recent Transactions",
                   style: TextStyle(
                       fontSize: 30,
                       color: Colors.blueAccent,
@@ -37,31 +36,34 @@ class TransactionHistoryState extends ConsumerState<TransactionHistory> {
               ],
             ),
           ),
-          Container(
-            width: 520,
-            height: 320,
-            color: Colors.white,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                if (transactionList.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'Transaction is not being done',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  );
-                } else {
+          // Check if transactionList is empty before building the ListView
+          if (transactionList.isEmpty)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'No transactions available',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            )
+          else
+            Container(
+              width: 520,
+              height: 320,
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: transactionList.length,
+                itemBuilder: (context, index) {
                   return TransactionComponent(
                     title: transactionList[index].title.toString(),
                     category: transactionList[index].category.toString(),
                     amount: transactionList[index].amount.toString(),
                     expType: transactionList[index].transactionType.toString(),
                   );
-                }
-              },
-              itemCount: transactionList.length,
+                },
+              ),
             ),
-          ),
         ],
       ),
     );

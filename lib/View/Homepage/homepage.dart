@@ -1,9 +1,12 @@
+import 'package:expense_tracker2/Controller/Charts/Pie/pieChart.dart';
 import 'package:expense_tracker2/Controller/Features/features.dart';
-import 'package:expense_tracker2/Controller/Homepage/actionCard.dart';
-import 'package:expense_tracker2/Controller/Homepage/appBar.dart';
-import 'package:expense_tracker2/Controller/Homepage/drawerComponent.dart';
+import 'package:expense_tracker2/Controller/Features/Homepage/actionCard.dart';
+import 'package:expense_tracker2/Controller/Features/Homepage/appBar.dart';
+import 'package:expense_tracker2/Controller/Features/Homepage/drawerComponent.dart';
 import 'package:expense_tracker2/Controller/Src/transactionHistory.dart';
+import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
 import 'package:expense_tracker2/Provider/sessionProvider.dart';
+import 'package:expense_tracker2/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,10 +19,23 @@ class MyHomePage extends ConsumerStatefulWidget {
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+
+    final userEmail = ref.read(sessionProvider).user?.email;
+
+    if (userEmail != null) {
+      // Call loadData only once during initialization
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref.read(expenseTrackerProvider).loadData(userEmail);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final user = ref.watch(sessionProvider).user;
-    final lastName =
-        user?.lastName ?? 'User'; // Use 'User' as default if lastName is null
+    final lastName = user?.lastName ?? 'User';
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +46,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               "Namastae",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w200),
             ),
-            Text("Mr $lastName")
+            Text("Mr $lastName"),
           ],
         ),
       ),
@@ -42,22 +58,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             children: [
               BalanceCardComponent(),
               Features(),
-              TransactionHistory()
+              TransactionHistory(),
+              AllPieChartComponents()
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: "Reports",
-          ),
-        ],
       ),
     );
   }

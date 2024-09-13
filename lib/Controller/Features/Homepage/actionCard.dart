@@ -36,7 +36,7 @@ class BalanceCardComponent extends ConsumerWidget {
               .substring(banks[index].accountNumber.length - 4),
           bankName: banks[index].bankName, // Corrected variable name
         ),
-        options: CarouselOptions(autoPlay: true),
+        options: FlutterCarouselOptions(autoPlay: true),
       ),
     );
   }
@@ -66,7 +66,7 @@ class BalanceCard extends StatelessWidget {
         ),
         elevation: 8,
         child: Container(
-          width: 420,
+          width: 520,
           height: 250,
           decoration: BoxDecoration(
             gradient: const LinearGradient(

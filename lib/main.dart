@@ -1,9 +1,7 @@
-import 'package:expense_tracker2/Modal/auth.dart';
 import 'package:expense_tracker2/Modal/billsApi.dart';
-import 'package:expense_tracker2/View/Payment/ElectricityBills/searchId.dart';
 import 'package:expense_tracker2/splashScreen.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
