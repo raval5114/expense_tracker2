@@ -2,15 +2,14 @@ import 'package:expense_tracker2/Controller/Bills/searchIdComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ElectricityBillView extends ConsumerStatefulWidget {
-  const ElectricityBillView({super.key});
+class GasBillView extends ConsumerStatefulWidget {
+  const GasBillView({super.key});
 
   @override
-  ConsumerState<ElectricityBillView> createState() =>
-      _ElectricityBillViewState();
+  ConsumerState<GasBillView> createState() => _GasBillViewState();
 }
 
-class _ElectricityBillViewState extends ConsumerState<ElectricityBillView> {
+class _GasBillViewState extends ConsumerState<GasBillView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,15 +17,15 @@ class _ElectricityBillViewState extends ConsumerState<ElectricityBillView> {
         title: const Padding(
           padding: EdgeInsets.all(10.0),
           child: Text(
-            "Electricity Bill",
+            "Gas Bill",
             style: TextStyle(fontSize: 33, fontWeight: FontWeight.w600),
           ),
         ),
         centerTitle: true,
       ),
       body: const SearchIdComponent(
-        categoryIcon: Icons.lightbulb_sharp,
-        categoryName: 'Electricity',
+        categoryIcon: Icons.gas_meter,
+        categoryName: 'Gas Bill',
         searchId: 'ConsumerNo',
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:expense_tracker2/Controller/Charts/Pie/pieChart.dart';
 import 'package:expense_tracker2/Controller/Features/features.dart';
-import 'package:expense_tracker2/Controller/Features/Homepage/actionCard.dart';
-import 'package:expense_tracker2/Controller/Features/Homepage/appBar.dart';
-import 'package:expense_tracker2/Controller/Features/Homepage/drawerComponent.dart';
+import 'package:expense_tracker2/Controller/Homepage/actionCard.dart';
+import 'package:expense_tracker2/Controller/Homepage/appBar.dart';
+import 'package:expense_tracker2/Controller/Homepage/drawerComponent.dart';
 import 'package:expense_tracker2/Controller/Src/transactionHistory.dart';
 import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
 import 'package:expense_tracker2/Provider/sessionProvider.dart';
@@ -51,16 +51,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       ),
       drawer: const DrawerComponent(),
-      body: const Padding(
-        padding: EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BalanceCardComponent(),
-              Features(),
-              TransactionHistory(),
-              AllPieChartComponents()
-            ],
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: const SingleChildScrollView(
+            child: Column(
+              children: [
+                BalanceCardComponent(),
+                Features(),
+                TransactionHistory(),
+                AllPieChartComponents()
+              ],
+            ),
           ),
         ),
       ),

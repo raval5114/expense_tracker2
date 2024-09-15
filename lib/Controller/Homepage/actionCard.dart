@@ -1,7 +1,7 @@
 import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class BalanceCardComponent extends ConsumerWidget {
   const BalanceCardComponent({super.key});
@@ -10,10 +10,8 @@ class BalanceCardComponent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final account = ref.watch(accountProvider).account;
 
-    // Handle potential null values for account and banks
     final banks = account?.banks ?? [];
 
-    // If banks list is empty, you might want to show a placeholder
     if (banks.isEmpty) {
       return const Center(
         child: Text(
@@ -22,21 +20,27 @@ class BalanceCardComponent extends ConsumerWidget {
         ),
       );
     }
-
     return SizedBox(
       width: double.infinity,
-      height: 250, // Set a fixed height if needed
-      child: FlutterCarousel.builder(
-        itemCount: banks.length,
-        itemBuilder: (context, index, realIndex) => BalanceCard(
-          accountName: account!.accountHolderName,
-          accountBalc: banks[index].balc.toString(), // Safely convert to String
-          accountNo: banks[index]
-              .accountNumber
-              .substring(banks[index].accountNumber.length - 4),
-          bankName: banks[index].bankName, // Corrected variable name
+      //height: 250,
+      child: SingleChildScrollView(
+        child: CarouselSlider(
+          items: banks
+              .map((bank) => BalanceCard(
+                    accountName: account!.accountHolderName,
+                    accountBalc:
+                        bank.balc.toString(), // Safely convert to String
+                    accountNo: bank.accountNumber
+                        .substring(bank.accountNumber.length - 4),
+                    bankName: bank.bankName, // Corrected variable name
+                  ))
+              .toList(),
+          options: CarouselOptions(
+            autoPlay: true,
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+          ),
         ),
-        options: FlutterCarouselOptions(autoPlay: true),
       ),
     );
   }
@@ -58,7 +62,6 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Make the card responsive by using MediaQuery or LayoutBuilder
     return Center(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -66,8 +69,8 @@ class BalanceCard extends StatelessWidget {
         ),
         elevation: 8,
         child: Container(
-          width: 520,
-          height: 250,
+          width: double.infinity, // Use the available width
+          height: 160,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
@@ -81,7 +84,7 @@ class BalanceCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -89,7 +92,7 @@ class BalanceCard extends StatelessWidget {
                   "Name",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 21,
+                    fontSize: 14, // Reduced font size
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -97,25 +100,25 @@ class BalanceCard extends StatelessWidget {
                   accountName,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 18, // Reduced font size
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 19),
+                const SizedBox(height: 15), // Reduced height
                 Text(
                   "**** **** **** $accountNo",
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 18, // Reduced font size
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 10),
+
                 const Text(
                   "Balance",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 21,
+                    fontSize: 14, // Reduced font size
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -129,16 +132,16 @@ class BalanceCard extends StatelessWidget {
                       accountBalc,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 21,
+                        fontSize: 14, // Reduced font size
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const Spacer(),
+                    const Expanded(child: SizedBox()),
                     Text(
                       bankName,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 21,
+                        fontSize: 14, // Reduced font size
                         fontWeight: FontWeight.w600,
                       ),
                     ),

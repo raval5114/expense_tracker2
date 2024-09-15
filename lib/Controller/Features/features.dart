@@ -1,4 +1,5 @@
 import 'package:expense_tracker2/View/Payment/ElectricityBills/searchId.dart';
+import 'package:expense_tracker2/View/Payment/bilsView.dart';
 import 'package:flutter/material.dart';
 
 class Features extends StatelessWidget {
@@ -56,7 +57,7 @@ class Features extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SearchId(),
+                        builder: (context) => const BillsView(),
                       ));
                 },
               )

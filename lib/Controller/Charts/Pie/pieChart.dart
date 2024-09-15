@@ -11,8 +11,8 @@ class AllPieChartComponents extends StatefulWidget {
 class _AllPieChartComponentsState extends State<AllPieChartComponents> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return SizedBox(
+      width: 520,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,12 +30,13 @@ class _AllPieChartComponentsState extends State<AllPieChartComponents> {
           const SizedBox(height: 10),
           // Wrapping ListView in a SizedBox to give it height
           SizedBox(
-            height: 400, // Set desired height
+            height: 350, // Set desired height
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: const [
                 SizedBox(
                   width: 300, // Set the width for each Card
+                  height: 320,
                   child: Card(
                     elevation: 10,
                     child: PieChartComponent(),

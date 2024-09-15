@@ -22,6 +22,7 @@ class SearchIdComponent extends ConsumerStatefulWidget {
 }
 
 class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
+  @override
   List<Widget> addPaymentValue() {
     // Retrieve payment history from the provider
     final paymentHistory = ref.watch(billProvider).bill?.paymentHistory;
@@ -42,11 +43,21 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
         .toList(); // Convert the Iterable to a List
   }
 
-  final TextEditingController consumerId = TextEditingController();
+  String? name;
+  String? consumerID;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    name = null;
+    consumerID;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bill = ref.watch(billProvider).bill;
+    final TextEditingController consumerId = TextEditingController();
+
+    var bill = ref.watch(billProvider).bill;
 
     return ListView(
       children: [
@@ -112,9 +123,22 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
                   onPressed: () async {
                     final retrievedBill =
                         await bilsAndStuffService.retrieveRecord(
-                            ELECTRICITY_BILL_COLLECTION,
-                            consumerId.text.toString());
-                    ref.read(billProvider.notifier).addBill(retrievedBill!);
+                      ELECTRICITY_BILL_COLLECTION,
+                      consumerId.text.toString(),
+                    );
+                    try {
+                      if (retrievedBill != null) {
+                        ref.read(billProvider.notifier).addBill(retrievedBill);
+
+                        // Using setState to trigger a UI update after adding the bill
+                        setState(() {
+                          name = retrievedBill.name;
+                          consumerID = retrievedBill.consumerNumber;
+                        });
+                      }
+                    } catch (e) {
+                      debugPrint('$e');
+                    }
                   },
                   child: const Text(
                     "Search",
@@ -151,7 +175,7 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
                         ),
                       ),
                       Text(
-                        bill.consumerNumber,
+                        ref.watch(billProvider).bill?.consumerNumber ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -175,7 +199,7 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
                         ),
                       ),
                       Text(
-                        bill.name ?? 'N/A',
+                        ref.watch(billProvider).bill?.name ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -185,6 +209,7 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
                   ),
                 ),
               ),
+              ...addPaymentValue(),
             ],
           )
         else
@@ -200,73 +225,86 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
 }
 
 class PaymentInfo extends StatelessWidget {
-  const PaymentInfo({super.key, required this.amount, required this.status});
   final String amount;
   final String status;
+
+  const PaymentInfo({
+    super.key,
+    required this.amount,
+    required this.status,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Bill Amount: ",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+    return Card(
+      elevation: 6,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Section header for each bill
+
+            // Bill amount and status
+            _buildRow("Bill Amount:", amount),
+            _buildRow("Status:", status),
+
+            // "Pay Now" button only if status is Unpaid
+            if (status == 'Unpaid')
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Add payment action here
+                  },
+                  child: const Text(
+                    "Pay Now",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                Text(
-                  amount,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build each row of information
+  Widget _buildRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Status: ",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  status,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
           ),
-        ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
-          ),
-          onPressed: () {},
-          child: const Text(
-            "Pay Now",
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
