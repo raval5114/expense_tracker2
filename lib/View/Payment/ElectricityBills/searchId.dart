@@ -1,4 +1,5 @@
 import 'package:expense_tracker2/Controller/Bills/searchIdComponent.dart';
+import 'package:expense_tracker2/Modal/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,6 +29,7 @@ class _ElectricityBillViewState extends ConsumerState<ElectricityBillView> {
         categoryIcon: Icons.lightbulb_sharp,
         categoryName: 'Electricity',
         searchId: 'ConsumerNo',
+        collectionName: ELECTRICITY_BILL_COLLECTION,
       ),
     );
   }

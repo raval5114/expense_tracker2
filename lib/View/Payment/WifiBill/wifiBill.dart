@@ -27,6 +27,7 @@ class _WifiBillViewState extends ConsumerState<WifiBillView> {
         categoryIcon: Icons.router,
         categoryName: 'Wifi Bill',
         searchId: 'ConsumerNo',
+        collectionName: '',
       ),
     );
   }

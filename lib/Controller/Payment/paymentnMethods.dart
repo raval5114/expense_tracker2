@@ -25,41 +25,27 @@ class _PayWithCardsState extends State<PayWithCards> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: BalanceCard(
-                accountName: "Hari Raval",
-                accountBalc: '50000',
-                accountNo: '5114',
-                bankName: 'SBI'),
-          ),
-          const SizedBox(height: 20),
-          const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(
-              "Account Number:",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              "Select Bank:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: DropdownButtonFormField<String>(
+            const SizedBox(height: 10),
+            DropdownButtonFormField<String>(
               value: _dropDownDefaultItem,
-              icon: const Icon(
-                Icons.arrow_downward_sharp,
-                size: 32,
+              icon: const Icon(Icons.arrow_downward_sharp, size: 28),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
-              decoration: const InputDecoration(border: OutlineInputBorder()),
-              iconEnabledColor: Colors.blueAccent,
-              style: const TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400),
-              dropdownColor: Colors.white,
               items: const [
                 DropdownMenuItem(
                     value: 'SBI', child: Text('State Bank Of India')),
@@ -78,66 +64,63 @@ class _PayWithCardsState extends State<PayWithCards> {
                 return null;
               },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox(
-              width: 100,
-              child: TextFormField(
-                controller: _cvvController,
-                obscureText: true,
-                maxLength: 3, // CVV is typically 3 digits
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                obscuringCharacter: "*",
-                decoration: const InputDecoration(
-                  label: Text("CVV"),
-                  border: OutlineInputBorder(),
-                  counterText: "", // Hides the character counter
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your CVV';
-                  } else if (value.length != 3) {
-                    return 'CVV must be 3 digits';
-                  }
-                  return null;
-                },
-              ),
+            const SizedBox(height: 20),
+            const Text(
+              "Enter CVV:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox(
-              width: 100,
-              child: TextFormField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: const InputDecoration(
-                  prefix: Icon(Icons.currency_rupee),
-                  label: Text("Amount"),
-                  border: OutlineInputBorder(),
-                  counterText: "", // Hides the character counter
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an amount';
-                  } else if (double.tryParse(value) == null ||
-                      double.parse(value) <= 0) {
-                    return 'Please enter a valid amount';
-                  }
-                  return null;
-                },
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _cvvController,
+              obscureText: true,
+              maxLength: 3, // CVV is typically 3 digits
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(
+                label: Text("CVV"),
+                border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your CVV';
+                } else if (value.length != 3) {
+                  return 'CVV must be 3 digits';
+                }
+                return null;
+              },
             ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
+            const SizedBox(height: 20),
+            const Text(
+              "Enter Amount:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.currency_rupee),
+                labelText: "Amount",
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter an amount';
+                } else if (double.tryParse(value) == null ||
+                    double.parse(value) <= 0) {
+                  return 'Please enter a valid amount';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 30),
+            Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -151,12 +134,12 @@ class _PayWithCardsState extends State<PayWithCards> {
                 },
                 child: const Text(
                   "Pay",
-                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -183,8 +166,8 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -192,7 +175,7 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
           children: [
             const Text(
               "Enter Mobile Number:",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             TextFormField(
@@ -218,7 +201,7 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
             const SizedBox(height: 20),
             const Text(
               "Enter Amount:",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             TextFormField(
@@ -226,9 +209,9 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(
-                prefix: Icon(Icons.currency_rupee),
-                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.currency_rupee),
                 hintText: 'Amount',
+                border: OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -240,15 +223,16 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
                 return null;
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Navigate to the BankPassword screen after validation
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -259,7 +243,7 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
                 },
                 child: const Text(
                   "Pay",
-                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),

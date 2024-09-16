@@ -1,4 +1,5 @@
 import 'package:expense_tracker2/Controller/Bills/searchIdComponent.dart';
+import 'package:expense_tracker2/Modal/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,6 +28,7 @@ class _GasBillViewState extends ConsumerState<GasBillView> {
         categoryIcon: Icons.gas_meter,
         categoryName: 'Gas Bill',
         searchId: 'ConsumerNo',
+        collectionName: GAS_BILL_COLLECTION,
       ),
     );
   }

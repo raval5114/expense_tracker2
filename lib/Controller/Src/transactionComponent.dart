@@ -8,10 +8,12 @@ class TransactionComponent extends StatefulWidget {
     required this.expType,
     super.key,
   });
+
   final String title;
   final String category;
   final String amount;
   final String expType;
+
   @override
   State<TransactionComponent> createState() => _TransactionComponentState();
 }
@@ -21,7 +23,14 @@ class _TransactionComponentState extends State<TransactionComponent> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: const Icon(Icons.nest_cam_wired_stand_sharp),
+        leading: Icon(
+          widget.expType == "Income"
+              ? Icons.arrow_circle_up_outlined // Icon for income
+              : Icons.arrow_circle_down_outlined, // Icon for expense
+          color: widget.expType == "Income"
+              ? Colors.green
+              : Colors.red, // Color based on type
+        ),
         title: Text(
           widget.title,
           style: const TextStyle(color: Colors.black),

@@ -9,3 +9,5 @@ const MONGO_URL_FOR_BILL =
 const ELECTRICITY_BILL_COLLECTION = "ElectricityBill";
 const SUBSCRIPTION_COLLECTION = "Subscription";
 const GAS_BILL_COLLECTION = "GasBill";
+const Televison_BILL_COLLECTION = "TelevisionBill";
+const Wifi_BILL_COLLECTION = "WifiBill";

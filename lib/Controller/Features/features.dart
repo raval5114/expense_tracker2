@@ -1,5 +1,5 @@
-import 'package:expense_tracker2/View/Payment/ElectricityBills/searchId.dart';
 import 'package:expense_tracker2/View/Payment/bilsView.dart';
+import 'package:expense_tracker2/View/Transfer/transferView.dart';
 import 'package:flutter/material.dart';
 
 class Features extends StatelessWidget {
@@ -16,7 +16,10 @@ class Features extends StatelessWidget {
             children: [
               Text(
                 "Features",
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87),
               ),
               Expanded(
                 child: SizedBox(),
@@ -27,13 +30,22 @@ class Features extends StatelessWidget {
               )
             ],
           ),
-          Row(
+          const SizedBox(
+            height: 20,
+          ),
+          Wrap(
+            spacing: 15,
+            runSpacing: 15,
             children: [
               FeatureComponent(
                 text: "Transfer",
                 featureIconData: Icons.send,
                 callback: () {
-                  debugPrint('Transfer feature clicked');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TransferPage(),
+                      ));
                 },
               ),
               FeatureComponent(
@@ -69,49 +81,66 @@ class Features extends StatelessWidget {
   }
 }
 
-class FeatureComponent extends StatefulWidget {
-  const FeatureComponent(
-      {super.key,
-      required this.text,
-      required this.featureIconData,
-      required this.callback});
+class FeatureComponent extends StatelessWidget {
+  const FeatureComponent({
+    super.key,
+    required this.text,
+    required this.featureIconData,
+    required this.callback,
+  });
 
   final String text;
   final IconData featureIconData;
   final VoidCallback callback;
 
   @override
-  State<FeatureComponent> createState() => _FeatureComponentState();
-}
-
-class _FeatureComponentState extends State<FeatureComponent> {
-  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.callback,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            CircleAvatar(
-                backgroundColor: Colors.transparent,
+      onTap: callback,
+      child: Container(
+        constraints: const BoxConstraints(
+          minWidth: 100, // Minimum width
+          minHeight: 120, // Minimum height
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, 4),
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Center content vertically
+            crossAxisAlignment:
+                CrossAxisAlignment.center, // Center content horizontally
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.blueAccent.withOpacity(0.1),
                 child: Icon(
-                  widget.featureIconData,
+                  featureIconData,
                   size: 32,
                   color: Colors.blueAccent,
-                )),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                widget.text,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
               ),
-            )
-          ],
+              const SizedBox(height: 10),
+              Text(
+                text,
+                textAlign: TextAlign.center, // Center text
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:expense_tracker2/Modal/ElectricityBill.dart';
 import 'package:expense_tracker2/Provider/billProvider.dart';
 import 'package:expense_tracker2/Modal/billsApi.dart';
 import 'package:expense_tracker2/Modal/const.dart';
+import 'package:expense_tracker2/View/Payment/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,13 +10,14 @@ class SearchIdComponent extends ConsumerStatefulWidget {
   final IconData categoryIcon;
   final String categoryName;
   final String searchId;
+  final String collectionName;
 
-  const SearchIdComponent({
-    super.key,
-    required this.categoryIcon,
-    required this.categoryName,
-    required this.searchId,
-  });
+  const SearchIdComponent(
+      {super.key,
+      required this.categoryIcon,
+      required this.categoryName,
+      required this.searchId,
+      required this.collectionName});
 
   @override
   _SearchIdComponentState createState() => _SearchIdComponentState();
@@ -123,7 +125,7 @@ class _SearchIdComponentState extends ConsumerState<SearchIdComponent> {
                   onPressed: () async {
                     final retrievedBill =
                         await bilsAndStuffService.retrieveRecord(
-                      ELECTRICITY_BILL_COLLECTION,
+                      widget.collectionName,
                       consumerId.text.toString(),
                     );
                     try {
@@ -264,7 +266,11 @@ class PaymentInfo extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // Add payment action here
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Payment(),
+                        ));
                   },
                   child: const Text(
                     "Pay Now",

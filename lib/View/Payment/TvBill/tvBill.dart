@@ -27,6 +27,7 @@ class _TvBillViewState extends ConsumerState<TvBillView> {
         categoryIcon: Icons.router,
         categoryName: 'Television Bill',
         searchId: 'ConsumerNo',
+        collectionName: '',
       ),
     );
   }

@@ -30,7 +30,7 @@ class TransactionHistoryState extends ConsumerState<TransactionHistory> {
                   "Recent Transactions",
                   style: TextStyle(
                       fontSize: 30,
-                      color: Colors.blueAccent,
+                      color: Colors.black,
                       fontWeight: FontWeight.w700),
                 )
               ],
