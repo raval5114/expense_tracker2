@@ -155,6 +155,26 @@ class AuthService {
     }
   }
 
+  // Update banks for an account
+  Future<void> updateBanks(String email, List<Bank> updatedBanks) async {
+    try {
+      // Convert List<Bank> to List<Map<String, dynamic>> for MongoDB
+      final collection = await getCollection(collectionAccountsName);
+      List<Map<String, dynamic>> banksJson =
+          updatedBanks.map((bank) => bank.tojson()).toList();
+
+      // Update the banks array in the MongoDB document
+      await collection.updateOne(
+          where.eq('email', email), // Match the document by email
+          modify.set(
+              'banks', banksJson) // Replace the banks array with the new list
+          );
+      print("Banks updated successfully!");
+    } catch (e) {
+      print("Error during update: $e");
+    }
+  }
+
   Future<Map<String, dynamic>?> findAccount(String email) async {
     try {
       final collection = await getCollection(collectionAccountsName);
@@ -169,6 +189,37 @@ class AuthService {
       return result;
     } catch (e) {
       debugPrint('Error finding account: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> findAccountByMobileNo(String mobileNo) async {
+    try {
+      final collection = await getCollection(collectionAccountsName);
+      final result = await collection.findOne(where.eq('mobileNo', mobileNo));
+
+      // Check if result is null, and handle accordingly
+      if (result == null) {
+        debugPrint('No account found for mobile number: $mobileNo');
+        return null;
+      }
+
+      return result;
+    } catch (e) {
+      debugPrint('Error finding account by mobile number: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> findDocumentByField(
+      String fieldName, dynamic value) async {
+    try {
+      final collection = await getCollection('Accounts');
+      final query = where.eq(fieldName, value);
+      final document = await collection.findOne(query);
+      return document;
+    } catch (e) {
+      debugPrint("Error: $e");
       return null;
     }
   }

@@ -1,16 +1,20 @@
-import 'package:expense_tracker2/Controller/Homepage/actionCard.dart';
+import 'package:expense_tracker2/Modal/auth.dart';
+import 'package:expense_tracker2/Modal/bank.dart';
+import 'package:expense_tracker2/Modal/const.dart';
+import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:expense_tracker2/View/Payment/bankPin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PayWithCards extends StatefulWidget {
+class PayWithCards extends ConsumerStatefulWidget {
   const PayWithCards({super.key});
 
   @override
-  State<PayWithCards> createState() => _PayWithCardsState();
+  ConsumerState<PayWithCards> createState() => _PayWithCardsState();
 }
 
-class _PayWithCardsState extends State<PayWithCards> {
+class _PayWithCardsState extends ConsumerState<PayWithCards> {
   final _formKey = GlobalKey<FormState>();
   var _dropDownDefaultItem = 'SBI';
   final TextEditingController _cvvController = TextEditingController();
@@ -50,7 +54,7 @@ class _PayWithCardsState extends State<PayWithCards> {
                 DropdownMenuItem(
                     value: 'SBI', child: Text('State Bank Of India')),
                 DropdownMenuItem(value: 'BOI', child: Text('Bank of India')),
-                DropdownMenuItem(value: 'AXIS', child: Text('Axis Bank')),
+                DropdownMenuItem(value: 'Axis Bank', child: Text('Axis Bank')),
               ],
               onChanged: (String? value) {
                 setState(() {
@@ -123,14 +127,7 @@ class _PayWithCardsState extends State<PayWithCards> {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BankPassword(),
-                      ),
-                    );
-                  }
+                  if (_formKey.currentState!.validate()) {}
                 },
                 child: const Text(
                   "Pay",
@@ -145,22 +142,22 @@ class _PayWithCardsState extends State<PayWithCards> {
   }
 }
 
-class PayWithNumbers extends StatefulWidget {
-  const PayWithNumbers({super.key});
+class PayWithNumbers extends ConsumerStatefulWidget {
+  const PayWithNumbers({Key? key}) : super(key: key);
 
   @override
-  State<PayWithNumbers> createState() => _PayWithNumbersState();
+  ConsumerState<PayWithNumbers> createState() => _PayWithNumbersState();
 }
 
-class _PayWithNumbersState extends State<PayWithNumbers> {
+class _PayWithNumbersState extends ConsumerState<PayWithNumbers> {
   final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _mobileNumberController.dispose();
-    _amountController.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
@@ -183,7 +180,7 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(10) // limit to 10 digits
+                LengthLimitingTextInputFormatter(10), // limit to 10 digits
               ],
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -205,7 +202,7 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              controller: _amountController,
+              controller: amountController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: const InputDecoration(
@@ -232,13 +229,13 @@ class _PayWithNumbersState extends State<PayWithNumbers> {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BankPassword(),
-                      ),
-                    );
+                  if (_formKey.currentState?.validate() ?? false) {
+                    // Make sure accountProvider is correctly defined and accessible
+                    final AccountProvider = ref.read(accountProvider);
+                    AccountProvider.billPaymentWithMobileNumber(
+                        ref,
+                        _mobileNumberController.text.toString(),
+                        amountController.text.toString());
                   }
                 },
                 child: const Text(

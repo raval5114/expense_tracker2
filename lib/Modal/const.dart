@@ -1,7 +1,7 @@
 const MONGO_URL =
     "mongodb+srv://ravalhari:ravalhari5114@cluster0.ga8cqdj.mongodb.net/Expensetracker?retryWrites=true&w=majority&appName=Cluster0";
 const USER_COLLECTION = "User";
-const BANKINFO = "bankinfo";
+const BANKINFO = "Accounts";
 const TRANSACTIONS = "transaction";
 
 const MONGO_URL_FOR_BILL =

@@ -1,4 +1,5 @@
 import 'package:expense_tracker2/Modal/billsApi.dart';
+import 'package:expense_tracker2/View/paymentTestesing.dart';
 import 'package:expense_tracker2/splashScreen.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const PaymentTesting(),
     );
   }
 }

@@ -189,8 +189,7 @@ class _LoginComponentState extends State<LoginComponent> {
                 const SizedBox(height: 50),
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blueAccent),
+                    backgroundColor: WidgetStateProperty.all(Colors.blueAccent),
                   ),
                   onPressed: _isLoading
                       ? null
