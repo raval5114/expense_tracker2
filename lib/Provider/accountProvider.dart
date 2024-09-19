@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:expense_tracker2/Modal/bank.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expense_tracker2/Modal/auth.dart';
@@ -141,11 +142,10 @@ class AccountNotifier extends ChangeNotifier {
   }
 
   void billPaymentWithCard(WidgetRef ref, String dropDownDefaultItem,
-      dynamic cvvController, dynamic amountController) async {
+      dynamic cvvController, dynamic amountController, String email) async {
     try {
       // Fetch the user account based on email
-      final userAccount =
-          await authService.findAccount('hariraval81@gmail.com');
+      final userAccount = await authService.findAccount(email);
 
       if (userAccount == null) {
         debugPrint('User account not found');
@@ -192,6 +192,20 @@ class AccountNotifier extends ChangeNotifier {
     } catch (e) {
       debugPrint('An error occurred: $e');
     }
+  }
+
+  void transferEvent(WidgetRef ref, String amount) {
+    List<Bank>? currentUser = ref.watch(accountProvider).account?.banks;
+    String? email = ref.watch(sessionProvider).user?.email;
+    debugPrint('Before Transaction');
+    debugPrint('Balance: ${currentUser![1].balc}');
+    debugPrint('Deducted amount: ${amount}');
+    debugPrint('\n');
+    currentUser![1].balc -= int.parse(amount);
+    authService.updateBanks(email!, currentUser);
+    debugPrint("After Transaction");
+    debugPrint('Balance: ${currentUser[1].balc}');
+    debugPrint('Deducted amount: ${amount}');
   }
 }
 

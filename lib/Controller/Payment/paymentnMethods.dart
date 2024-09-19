@@ -1,7 +1,6 @@
-import 'package:expense_tracker2/Modal/auth.dart';
-import 'package:expense_tracker2/Modal/bank.dart';
-import 'package:expense_tracker2/Modal/const.dart';
+// ignore: file_names
 import 'package:expense_tracker2/Provider/accountProvider.dart';
+import 'package:expense_tracker2/Provider/sessionProvider.dart';
 import 'package:expense_tracker2/View/Payment/bankPin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,12 +16,12 @@ class PayWithCards extends ConsumerStatefulWidget {
 class _PayWithCardsState extends ConsumerState<PayWithCards> {
   final _formKey = GlobalKey<FormState>();
   var _dropDownDefaultItem = 'SBI';
-  final TextEditingController _cvvController = TextEditingController();
+  final TextEditingController cvvController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
 
   @override
   void dispose() {
-    _cvvController.dispose();
+    cvvController.dispose();
     _amountController.dispose();
     super.dispose();
   }
@@ -75,7 +74,7 @@ class _PayWithCardsState extends ConsumerState<PayWithCards> {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              controller: _cvvController,
+              controller: cvvController,
               obscureText: true,
               maxLength: 3, // CVV is typically 3 digits
               keyboardType: TextInputType.number,
@@ -127,7 +126,25 @@ class _PayWithCardsState extends ConsumerState<PayWithCards> {
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {}
+                  if (_formKey.currentState!.validate()) {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => BankPassword(),
+                    //     ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BankPassword(
+                            state: 'email',
+                            defaultDropDownValue: _dropDownDefaultItem,
+                            cvv: cvvController.text.toString(),
+                            amount: _amountController.text.toString(),
+                            mobileNo: '',
+                            email: ref.watch(sessionProvider).user!.email,
+                          ),
+                        ));
+                  }
                 },
                 child: const Text(
                   "Pay",
@@ -150,13 +167,13 @@ class PayWithNumbers extends ConsumerStatefulWidget {
 }
 
 class _PayWithNumbersState extends ConsumerState<PayWithNumbers> {
-  final TextEditingController _mobileNumberController = TextEditingController();
+  final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _mobileNumberController.dispose();
+    mobileNumberController.dispose();
     amountController.dispose();
     super.dispose();
   }
@@ -176,7 +193,7 @@ class _PayWithNumbersState extends ConsumerState<PayWithNumbers> {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              controller: _mobileNumberController,
+              controller: mobileNumberController,
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -231,11 +248,23 @@ class _PayWithNumbersState extends ConsumerState<PayWithNumbers> {
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
                     // Make sure accountProvider is correctly defined and accessible
-                    final AccountProvider = ref.read(accountProvider);
-                    AccountProvider.billPaymentWithMobileNumber(
-                        ref,
-                        _mobileNumberController.text.toString(),
-                        amountController.text.toString());
+                    // final AccountProvider = ref.read(accountProvider);
+                    // AccountProvider.billPaymentWithMobileNumber(
+                    //     ref,
+                    //     mobileNumberController.text.toString(),
+                    //     amountController.text.toString());
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BankPassword(
+                            state: 'mobileNumber',
+                            defaultDropDownValue: '',
+                            cvv: '',
+                            amount: amountController.text.toString(),
+                            mobileNo: mobileNumberController.text.toString(),
+                            email: ref.watch(sessionProvider).user!.email,
+                          ),
+                        ));
                   }
                 },
                 child: const Text(

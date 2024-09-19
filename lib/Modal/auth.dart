@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:expense_tracker2/Modal/bank.dart';
 import 'package:expense_tracker2/Modal/const.dart';
+import 'package:expense_tracker2/Modal/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -169,9 +170,22 @@ class AuthService {
           modify.set(
               'banks', banksJson) // Replace the banks array with the new list
           );
-      print("Banks updated successfully!");
+      debugPrint("Banks updated successfully!");
     } catch (e) {
-      print("Error during update: $e");
+      debugPrint("Error during update: $e");
+    }
+  }
+
+  Future<void> updateTransaction(
+      String email, List<Transaction> transList) async {
+    try {
+      final collection = await getCollection(TRANSACTIONS);
+      List<Map<String, dynamic>> transListToJson =
+          transList.map((trans) => trans.toJson()).toList();
+      await collection.updateOne(where.eq('email', email),
+          modify.set('transactionList', transListToJson));
+    } catch (e) {
+      debugPrint('$e');
     }
   }
 
@@ -211,19 +225,6 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>?> findDocumentByField(
-      String fieldName, dynamic value) async {
-    try {
-      final collection = await getCollection('Accounts');
-      final query = where.eq(fieldName, value);
-      final document = await collection.findOne(query);
-      return document;
-    } catch (e) {
-      debugPrint("Error: $e");
-      return null;
-    }
-  }
-
   Future<Map<String, dynamic>?> findAndLoadTransaction(String email) async {
     try {
       final collection = await getCollection('Transactions');
@@ -238,6 +239,11 @@ class AuthService {
       }
     } catch (e) {
       debugPrint('Error fetching transaction: $e');
+    }
+
+    Future<void> updateTransaction(String email) async {
+      final collection = await getCollection(TRANSACTIONS);
+      //finsh the query
     }
 
     // Return null if no transaction is found or if an error occurs

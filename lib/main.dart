@@ -1,7 +1,6 @@
 import 'package:expense_tracker2/Modal/billsApi.dart';
 import 'package:expense_tracker2/View/paymentTestesing.dart';
 import 'package:expense_tracker2/splashScreen.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,10 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Expense Tracker',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
-      home: const PaymentTesting(),
+      home: const SplashScreen(),
     );
   }
 }

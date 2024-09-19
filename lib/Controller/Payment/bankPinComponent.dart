@@ -1,13 +1,34 @@
+import 'package:expense_tracker2/Modal/transaction.dart';
+import 'package:expense_tracker2/Provider/accountProvider.dart';
+import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
+import 'package:expense_tracker2/View/Homepage/homepage.dart';
+import 'package:expense_tracker2/View/Payment/payment.dart';
+import 'package:expense_tracker2/View/Transfer/transferView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BankPasswordComponent extends StatefulWidget {
-  const BankPasswordComponent({super.key});
+class BankPasswordComponent extends ConsumerStatefulWidget {
+  String state;
+  String mobileNo;
+  String defaultDropDownValue;
+  String cvv;
+  String amount;
+  String email;
+  BankPasswordComponent(
+      {super.key,
+      required this.state,
+      required this.defaultDropDownValue,
+      required this.mobileNo,
+      required this.amount,
+      required this.cvv,
+      required this.email});
 
   @override
-  State<BankPasswordComponent> createState() => _BankPasswordComponentState();
+  ConsumerState<BankPasswordComponent> createState() =>
+      _BankPasswordComponentState();
 }
 
-class _BankPasswordComponentState extends State<BankPasswordComponent> {
+class _BankPasswordComponentState extends ConsumerState<BankPasswordComponent> {
   final List<TextEditingController> _controllers =
       List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
@@ -43,8 +64,100 @@ class _BankPasswordComponentState extends State<BankPasswordComponent> {
 
   void _submitPassword() {
     String password = _controllers.map((controller) => controller.text).join();
-    print('UPI Password: $password');
+
     // Handle password submission logic here
+    if (password == '123456') {
+      if (widget.state == 'mobileNumber') {
+        debugPrint('From MobileNumber');
+        ref
+            .watch(accountProvider)
+            .billPaymentWithMobileNumber(ref, widget.mobileNo, widget.amount);
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              title: const Text('Amount Transfer Successfully'),
+              content: const Text('Transaction is being done'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyHomePage(),
+                        ));
+                  },
+                  child: const Text('OK'),
+                )
+              ]),
+        );
+      }
+      if (widget.state == 'email') {
+        debugPrint('From Card');
+        ref.watch(accountProvider).billPaymentWithCard(
+            ref,
+            widget.defaultDropDownValue,
+            widget.cvv,
+            widget.amount,
+            widget.email);
+        ref.watch(expenseTrackerProvider).addTransaction(Transaction(
+            title: 'Bill payment',
+            amount: widget.amount,
+            category: 'Bills',
+            discription: '',
+            transactionType: 'Expense',
+            bankType: '',
+            time: TimeOfDay.now()));
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              title: const Text('Amount Transfer Successfully'),
+              content: const Text('Transaction is being done'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MyHomePage(),
+                        ));
+                  },
+                  child: const Text('OK'),
+                )
+              ]),
+        );
+      }
+      if (widget.state == 'Transfer') {
+        debugPrint('For Transfer');
+        ref.watch(accountProvider).transferEvent(ref, widget.amount);
+        ref.watch(expenseTrackerProvider).addTransaction(Transaction(
+            title: 'Personal Transfer',
+            amount: widget.amount,
+            category: 'Transfer',
+            discription: '',
+            transactionType: 'Expense',
+            bankType: '',
+            time: TimeOfDay.now()));
+
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              title: const Text('Amount Transfer Successfully'),
+              content: const Text('Transaction is being done'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TransferPage(),
+                        ));
+                  },
+                  child: const Text('OK'),
+                )
+              ]),
+        );
+      }
+    }
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:expense_tracker2/Modal/auth.dart';
 import 'package:expense_tracker2/Modal/transaction.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +8,17 @@ import 'package:flutter/material.dart';
 class ExpenseTracker extends ChangeNotifier {
   late String email;
   late int currentBalc;
-  List transactionList = <TransactionList>[];
+  late int expenses;
+  late int income;
+  List<Transaction> transactionList = [];
+
+  void loadExpenseAndData() {
+    transactionList.map((Transaction e) {
+      e.transactionType == "Income"
+          ? income += int.parse(e.amount)
+          : expenses += int.parse(e.amount);
+    });
+  }
 
   Future<void> loadData(String email) async {
     // Await the result from the authService
@@ -27,6 +39,18 @@ class ExpenseTracker extends ChangeNotifier {
     } else {
       // Handle the case where no transactions are found (if necessary)
       print("No transaction found for email: $email");
+    }
+  }
+
+  void addTransaction(Transaction t) {
+    if (t != null) {
+      if (!transactionList.contains(t)) {
+        // Avoid duplicates if needed
+        transactionList.add(t);
+        authService.updateTransaction(email, transactionList);
+        notifyListeners(); // Notify listeners about the change
+        print("Transaction added and updated successfully.");
+      }
     }
   }
 }
