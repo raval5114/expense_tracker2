@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AllPieChartComponents extends StatefulWidget {
   const AllPieChartComponents({super.key});
@@ -65,14 +66,14 @@ class _AllPieChartComponentsState extends State<AllPieChartComponents> {
   }
 }
 
-class PieChartComponent extends StatefulWidget {
+class PieChartComponent extends ConsumerStatefulWidget {
   const PieChartComponent({super.key});
 
   @override
-  State<PieChartComponent> createState() => _PieChartComponentState();
+  ConsumerState<PieChartComponent> createState() => _PieChartComponentState();
 }
 
-class _PieChartComponentState extends State<PieChartComponent> {
+class _PieChartComponentState extends ConsumerState<PieChartComponent> {
   int _touchedIndex = -1; // Keeps track of which section is touched
   String _touchedCategory = ""; // Keeps track of the touched category
   double _touchedValue = 0; // Keeps track of the touched value
@@ -171,16 +172,16 @@ class _PieChartComponentState extends State<PieChartComponent> {
   }
 }
 
-class PieChartForCategoryForIncome extends StatefulWidget {
+class PieChartForCategoryForIncome extends ConsumerStatefulWidget {
   const PieChartForCategoryForIncome({super.key});
 
   @override
-  State<PieChartForCategoryForIncome> createState() =>
+  ConsumerState<PieChartForCategoryForIncome> createState() =>
       _PieChartForCategoryForIncomeState();
 }
 
 class _PieChartForCategoryForIncomeState
-    extends State<PieChartForCategoryForIncome> {
+    extends ConsumerState<PieChartForCategoryForIncome> {
   int _touchedIndex = -1; // Keeps track of which section is touched
   String _touchedCategory = ""; // Keeps track of the touched category
   double _touchedValue = 0; // Keeps track of the touched value
@@ -282,16 +283,16 @@ class _PieChartForCategoryForIncomeState
   }
 }
 
-class PieChartForCategoryForExpense extends StatefulWidget {
+class PieChartForCategoryForExpense extends ConsumerStatefulWidget {
   const PieChartForCategoryForExpense({super.key});
 
   @override
-  State<PieChartForCategoryForExpense> createState() =>
+  ConsumerState<PieChartForCategoryForExpense> createState() =>
       _PieChartForCategoryForExpenseState();
 }
 
 class _PieChartForCategoryForExpenseState
-    extends State<PieChartForCategoryForExpense> {
+    extends ConsumerState<PieChartForCategoryForExpense> {
   int _touchedIndex = -1; // Keeps track of which section is touched
   String _touchedCategory = ""; // Keeps track of the touched category
   double _touchedValue = 0; // Keeps track of the touched value

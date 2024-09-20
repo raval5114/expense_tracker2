@@ -13,6 +13,7 @@ class ExpenseTracker extends ChangeNotifier {
   List<Transaction> transactionList = [];
 
   void loadExpenseAndData() {
+    //loading na
     transactionList.map((Transaction e) {
       e.transactionType == "Income"
           ? income += int.parse(e.amount)
