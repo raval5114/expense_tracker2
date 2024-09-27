@@ -32,8 +32,8 @@ class ExpenseTracker extends ChangeNotifier {
 
       // Set class properties using 'this' to refer to the instance variables
       this.email = transactionList2.email;
-      this.currentBalc = int.parse(transactionList2.currentBalc);
-      this.transactionList = transactionList2.transactionList;
+      currentBalc = int.parse(transactionList2.currentBalc);
+      transactionList = transactionList2.transactionList;
       debugPrint('Transactions are recorded');
       // Notify listeners to update UI
       notifyListeners();
@@ -43,15 +43,13 @@ class ExpenseTracker extends ChangeNotifier {
     }
   }
 
-  void addTransaction(Transaction t) {
-    if (t != null) {
-      if (!transactionList.contains(t)) {
-        // Avoid duplicates if needed
-        transactionList.add(t);
-        authService.updateTransaction(email, transactionList);
-        notifyListeners(); // Notify listeners about the change
-        print("Transaction added and updated successfully.");
-      }
+  void addTransaction(Transaction t) async {
+    if (!transactionList.contains(t)) {
+      // Avoid duplicates if needed
+      transactionList.add(t);
+      await authService.updateTransaction(email, transactionList);
+      notifyListeners(); // Notify listeners about the change
+      debugPrint("Transaction added and updated successfully.");
     }
   }
 }

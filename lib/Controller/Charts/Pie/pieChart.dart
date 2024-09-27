@@ -186,7 +186,6 @@ class _PieChartForCategoryForIncomeState
   String _touchedCategory = ""; // Keeps track of the touched category
   double _touchedValue = 0; // Keeps track of the touched value
 
-  // Updated data to represent different income categories
   final List<Map<String, dynamic>> incomeData = [
     {"Category": "Salary", "value": 30000, "color": Colors.green},
     {"Category": "Investments", "value": 12000, "color": Colors.blue},

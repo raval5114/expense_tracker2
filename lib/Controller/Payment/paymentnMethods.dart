@@ -127,11 +127,6 @@ class _PayWithCardsState extends ConsumerState<PayWithCards> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => BankPassword(),
-                    //     ));
                     Navigator.push(
                         context,
                         MaterialPageRoute(

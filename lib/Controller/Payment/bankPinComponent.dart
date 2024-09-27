@@ -106,7 +106,7 @@ class _BankPasswordComponentState extends ConsumerState<BankPasswordComponent> {
             discription: '',
             transactionType: 'Expense',
             bankType: '',
-            time: TimeOfDay.now()));
+            time: DateTime.now().toIso8601String()));
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -136,7 +136,7 @@ class _BankPasswordComponentState extends ConsumerState<BankPasswordComponent> {
             discription: '',
             transactionType: 'Expense',
             bankType: '',
-            time: TimeOfDay.now()));
+            time: DateTime.now().toIso8601String()));
 
         showDialog(
           context: context,
@@ -146,13 +146,17 @@ class _BankPasswordComponentState extends ConsumerState<BankPasswordComponent> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TransferPage(),
-                        ));
+                    // Pop until the second route from the top
+                    Navigator.popUntil(context, (route) => route.isFirst);
                   },
-                  child: const Text('OK'),
+                  child: const Text('back to hompage'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Pop the alert box
+                    Navigator.pop(context);
+                  },
+                  child: const Text('cancel'),
                 )
               ]),
         );

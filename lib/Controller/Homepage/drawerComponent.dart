@@ -38,7 +38,7 @@ class DrawerComponent extends ConsumerWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Accountpage(),
+                    builder: (context) => const AccountPage(),
                   ));
             },
             child: const ListTile(

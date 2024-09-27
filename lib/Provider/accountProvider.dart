@@ -130,8 +130,8 @@ class AccountNotifier extends ChangeNotifier {
 
         // Update the banks in the database
         await authService.updateBanks(
-          ref.watch(accountProvider).account!.email!,
-          ref.watch(accountProvider).account!.banks,
+          ref.read(accountProvider).account!.email,
+          ref.read(accountProvider).account!.banks,
         );
       } else {
         debugPrint('Insufficient Balance');
@@ -182,7 +182,8 @@ class AccountNotifier extends ChangeNotifier {
           bankList[bankIndex].balc -= int.parse(amountController);
           debugPrint('\nAfter Transaction');
           debugPrint('Updated Bank balance: ${bankList[bankIndex].balc}');
-          authService.updateBanks("hariraval81@gmail.com", bankList);
+          authService.updateBanks(
+              "${ref.watch(sessionProvider).user?.email}.", bankList);
         } else {
           debugPrint('insufficient Balance');
         }
@@ -201,7 +202,7 @@ class AccountNotifier extends ChangeNotifier {
     debugPrint('Balance: ${currentUser![1].balc}');
     debugPrint('Deducted amount: ${amount}');
     debugPrint('\n');
-    currentUser![1].balc -= int.parse(amount);
+    currentUser[1].balc -= int.parse(amount);
     authService.updateBanks(email!, currentUser);
     debugPrint("After Transaction");
     debugPrint('Balance: ${currentUser[1].balc}');

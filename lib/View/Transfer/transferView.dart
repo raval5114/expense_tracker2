@@ -246,7 +246,7 @@ class _transferViewComponentState extends ConsumerState<transferViewComponent> {
                     onPressed: () {
                       setState(() {
                         _amount = 100;
-                        _amountController.text = '100.00';
+                        _amountController.text = '100';
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -262,7 +262,7 @@ class _transferViewComponentState extends ConsumerState<transferViewComponent> {
                     onPressed: () {
                       setState(() {
                         _amount = 250;
-                        _amountController.text = '250.00';
+                        _amountController.text = '250';
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -278,7 +278,7 @@ class _transferViewComponentState extends ConsumerState<transferViewComponent> {
                     onPressed: () {
                       setState(() {
                         _amount = 500;
-                        _amountController.text = '500.00';
+                        _amountController.text = '500';
                       });
                     },
                     style: ElevatedButton.styleFrom(

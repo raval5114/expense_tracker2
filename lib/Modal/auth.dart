@@ -179,13 +179,22 @@ class AuthService {
   Future<void> updateTransaction(
       String email, List<Transaction> transList) async {
     try {
-      final collection = await getCollection(TRANSACTIONS);
+      final collection = await getCollection('Transactions');
+
+      // Convert the list of Transaction objects to JSON
       List<Map<String, dynamic>> transListToJson =
           transList.map((trans) => trans.toJson()).toList();
-      await collection.updateOne(where.eq('email', email),
-          modify.set('transactionList', transListToJson));
+
+      // Update the transactionList for the email, or insert if it doesn't exist
+      await collection.updateOne(
+        where.eq('email', email),
+        modify.set('transactionList', transListToJson),
+        upsert: true, // Insert document if it doesn't exist
+      );
+
+      debugPrint('Transaction updated');
     } catch (e) {
-      debugPrint('$e');
+      debugPrint('Error updating transaction: $e');
     }
   }
 
@@ -239,11 +248,6 @@ class AuthService {
       }
     } catch (e) {
       debugPrint('Error fetching transaction: $e');
-    }
-
-    Future<void> updateTransaction(String email) async {
-      final collection = await getCollection(TRANSACTIONS);
-      //finsh the query
     }
 
     // Return null if no transaction is found or if an error occurs
