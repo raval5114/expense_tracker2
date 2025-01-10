@@ -1,5 +1,4 @@
 import 'package:expense_tracker2/Controller/Payment/paymentnMethods.dart';
-import 'package:expense_tracker2/View/Payment/payment.dart';
 import 'package:flutter/material.dart';
 
 class PaymentTesting extends StatefulWidget {

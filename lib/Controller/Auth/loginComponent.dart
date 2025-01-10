@@ -9,6 +9,7 @@ import 'package:expense_tracker2/View/Auth/CreateAccount/namesAndDob.dart';
 import 'package:expense_tracker2/View/Homepage/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginComponent extends StatefulWidget {
   const LoginComponent({super.key});
@@ -33,6 +34,17 @@ class _LoginComponentState extends State<LoginComponent> {
     super.dispose();
   }
 
+  Future<void> settingSp(String email, String password) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("email", email);
+      prefs.setString("password", password);
+      debugPrint("Shared Preference Written Sucessfully");
+    } catch (e) {
+      debugPrint("Error $e");
+    }
+  }
+
   void _submitForm(WidgetRef ref) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -54,6 +66,7 @@ class _LoginComponentState extends State<LoginComponent> {
             email: loginSuccess['email'],
             dob: loginSuccess['dob'],
             password: password));
+        settingSp(email, password);
         final userAccount = await authService.findAccount(email);
         ref.watch(accountProvider).account = Account.fromJson(userAccount!);
         debugPrint(
@@ -92,6 +105,7 @@ class _LoginComponentState extends State<LoginComponent> {
           key: _formKey,
           child: Container(
             width: double.infinity,
+            height: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -109,6 +109,7 @@ class AuthService {
           'lastName': user['lastName'],
           'dob': user['dob'],
           'email': user['email'],
+          'password': password
         };
       } else {
         debugPrint(

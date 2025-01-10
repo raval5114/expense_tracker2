@@ -1,3 +1,5 @@
+import 'package:expense_tracker2/View/Add%20Expenses/addExpense.dart';
+import 'package:expense_tracker2/View/Add%20Income/addIncome.dart';
 import 'package:expense_tracker2/View/Payment/bilsView.dart';
 import 'package:expense_tracker2/View/Transfer/transferView.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +36,8 @@ class Features extends StatelessWidget {
             height: 20,
           ),
           Wrap(
-            spacing: 15,
-            runSpacing: 15,
+            spacing: 5,
+            runSpacing: 10,
             children: [
               FeatureComponent(
                 text: "Transfer",
@@ -72,6 +74,28 @@ class Features extends StatelessWidget {
                         builder: (context) => const BillsView(),
                       ));
                 },
+              ),
+              FeatureComponent(
+                text: "Add Expense",
+                featureIconData: Icons.account_balance_wallet,
+                callback: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddExpense(),
+                      ));
+                },
+              ),
+              FeatureComponent(
+                text: "Add Income",
+                featureIconData: Icons.account_balance_wallet,
+                callback: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddIncome(),
+                      ));
+                },
               )
             ],
           ),
@@ -98,17 +122,15 @@ class FeatureComponent extends StatelessWidget {
     return InkWell(
       onTap: callback,
       child: Container(
-        constraints: const BoxConstraints(
-          minWidth: 100, // Minimum width
-          minHeight: 120, // Minimum height
-        ),
+        width: 120, // Set fixed width
+        height: 140, // Set fixed height
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
-              offset: Offset(0, 4),
+              offset: Offset(0, 5),
               blurRadius: 8,
             ),
           ],

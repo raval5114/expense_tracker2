@@ -3,9 +3,15 @@ import 'package:expense_tracker2/View/Auth/SignUp/loginPage.dart';
 import 'package:expense_tracker2/View/Drawer/accountPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerComponent extends ConsumerWidget {
   const DrawerComponent({super.key});
+  void shuttingOfSharedPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("email");
+    prefs.remove("password");
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,6 +86,7 @@ class DrawerComponent extends ConsumerWidget {
           InkWell(
             onTap: () {
               user.createSession(ref.watch(sessionProvider).user!);
+              shuttingOfSharedPrefs();
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

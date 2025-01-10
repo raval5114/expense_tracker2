@@ -2,8 +2,6 @@ import 'package:expense_tracker2/Modal/transaction.dart';
 import 'package:expense_tracker2/Provider/accountProvider.dart';
 import 'package:expense_tracker2/Provider/expenseTrackerProvider.dart';
 import 'package:expense_tracker2/View/Homepage/homepage.dart';
-import 'package:expense_tracker2/View/Payment/payment.dart';
-import 'package:expense_tracker2/View/Transfer/transferView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -153,7 +151,6 @@ class _BankPasswordComponentState extends ConsumerState<BankPasswordComponent> {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Pop the alert box
                     Navigator.pop(context);
                   },
                   child: const Text('cancel'),

@@ -1,6 +1,4 @@
 import 'package:expense_tracker2/Modal/billsApi.dart';
-import 'package:expense_tracker2/View/IncomeAndExpenses/updateTransactionTesting.dart';
-import 'package:expense_tracker2/View/paymentTestesing.dart';
 import 'package:expense_tracker2/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
