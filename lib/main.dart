@@ -1,12 +1,9 @@
-import 'package:expense_tracker2/Modal/billsApi.dart';
 import 'package:expense_tracker2/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+main() {
   runApp(const ProviderScope(child: MyApp()));
-  bilsAndStuffService.connect();
 }
 
 class MyApp extends StatelessWidget {
